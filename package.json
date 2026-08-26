@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/quantumproxies/n8n-nodes-quanticdata.git"
+    "url": "git+https://github.com/quantumproxies/n8n-nodes-quanticdata.git"
   },
   "engines": {
     "node": ">=18.10"
