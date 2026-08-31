@@ -42,6 +42,6 @@ account includes free monthly usage, no card required. Add it in n8n as a
 - Scrape responses put the page in `content`, with `title`, `engine` and
   `attempts` alongside.
 - Search responses use SerpApi-compatible field names under `organic`.
-- Full parameter reference: [quanticdata.io/docs](https://quanticdata.io/docs/).
+- Full parameter reference: https://quanticdata.io/docs/
 
 MIT licensed.

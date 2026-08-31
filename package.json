@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-quanticdata",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "n8n community node for the QuanticData API — scrape any page to clean Markdown, run structured SERP searches, map sites, audit SEO and run 74 ready-made collectors through residential proxies. Pay per successful call.",
   "keywords": [
     "n8n-community-node-package",
