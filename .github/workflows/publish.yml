@@ -28,7 +28,10 @@ jobs:
         with:
           node-version: 20 # ships npm 10; provenance needs npm >= 9.5
           registry-url: https://registry.npmjs.org
-      - run: npm ci
+      # n8n-workflow pulls @n8n/expression-runtime -> isolated-vm, a native addon
+      # that does not compile against the runner's Node 20 V8 headers. We only
+      # need n8n-workflow's types to run tsc, so skip install scripts entirely.
+      - run: npm ci --ignore-scripts
       - run: npm run build
       # Verified nodes may not carry runtime dependencies — fail here rather
       # than in n8n's review queue.
