@@ -45,3 +45,22 @@ account includes free monthly usage, no card required. Add it in n8n as a
 - Full parameter reference: https://quanticdata.io/docs/
 
 MIT licensed.
+
+## Releasing
+
+Every release goes out from GitHub Actions, never from a laptop: since
+1 May 2026 n8n only verifies community nodes published with an npm
+**provenance** statement, and provenance is signed by the CI's OIDC token —
+a local `npm publish` cannot produce one.
+
+1. Bump `version` in `package.json` and commit.
+2. `git tag v<version> && git push origin v<version>` (or run the *Publish to
+   npm* workflow by hand).
+3. The workflow builds, refuses the release if a runtime dependency has crept
+   in — verified nodes may not have any — and publishes with
+   `npm publish --provenance --access public`.
+4. Check the attestation: `npm view n8n-nodes-quanticdata dist.attestations`
+   must not be empty, and the npm page shows the green "Provenance" panel.
+
+The one secret it needs is `NPM_TOKEN` (npm → Access Tokens → Granular or
+Classic **Automation** token with publish rights on this package).

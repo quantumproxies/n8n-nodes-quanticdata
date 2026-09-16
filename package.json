@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-quanticdata",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "n8n community node for the QuanticData API — scrape any page to clean Markdown, run structured SERP searches, map sites, audit SEO and run 74 ready-made collectors through residential proxies. Pay per successful call.",
   "keywords": [
     "n8n-community-node-package",
@@ -22,9 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/quantumproxies/n8n-nodes-quanticdata.git"
   },
-  "engines": {
-    "node": ">=18.10"
-  },
   "main": "index.js",
   "scripts": {
     "build": "tsc && cp nodes/QuanticData/quanticdata.svg dist/nodes/QuanticData/",
@@ -42,6 +39,13 @@
     "nodes": [
       "dist/nodes/QuanticData/QuanticData.node.js"
     ]
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "devDependencies": {
     "n8n-workflow": "^1.70.0",

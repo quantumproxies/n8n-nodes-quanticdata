@@ -1,0 +1,39 @@
+# Publishing this node from GitHub Actions is not a convenience: since
+# 1 May 2026 n8n only verifies community nodes published with an npm
+# provenance statement, and provenance can only be produced by a supported CI
+# with an OIDC token. 0.2.0 went out from a laptop and carries no attestation,
+# which is the one thing standing between this package and the verified list.
+#
+# Fire it by pushing a tag (git tag v0.2.1 && git push origin v0.2.1) or from
+# the Actions tab. Needs one repository secret: NPM_TOKEN, an npm "Automation"
+# token (Publish scope) — classic tokens work, granular ones must not have 2FA
+# on publish.
+name: Publish to npm
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # required for provenance; without it npm publish refuses
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20 # ships npm 10; provenance needs npm >= 9.5
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run build
+      # Verified nodes may not carry runtime dependencies — fail here rather
+      # than in n8n's review queue.
+      - name: Refuse runtime dependencies
+        run: node -e "const d=require('./package.json').dependencies||{};const n=Object.keys(d);if(n.length){console.error('runtime dependencies are not allowed for a verified node:',n.join(', '));process.exit(1)}"
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
